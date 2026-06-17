@@ -31,17 +31,27 @@ export function HomePage({cart}) {
 
     //getProducts()
 
+    //como se hace async await usando useEffect
+    useEffect(()=>{
+        const getHomeData = async () =>{
+            const response = await axios.get('http://localhost:3000/api/products');
+            setProducts(response.data)
+        }
+
+        getHomeData();
+    },[])
+
     //este usando axios
     //lo metemos en un use effect para controlar cuando lo ejecutamos y metemos los datos en un useState
 
     const[products,setProducts] = useState([]);
    
-    useEffect(()=>{
-        axios.get('http://localhost:3000/api/products')
-            .then((response)=>{
-                setProducts(response.data)
-            })
-    },[])
+    // useEffect(()=>{
+    //     axios.get('http://localhost:3000/api/products')
+    //         .then((response)=>{
+    //             setProducts(response.data)
+    //         })
+    // },[])
 
     return (
         <>
