@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import './checkout-header.css';
 import './CheckoutPage.css';
+import { useNavigate } from 'react-router';
 
 export function CheckoutPage({ cart, loadCart }) {
 
@@ -25,6 +26,16 @@ export function CheckoutPage({ cart, loadCart }) {
             })
         
     },[cart])
+
+    const navigate = useNavigate();
+
+    const createOrder = async() => {
+    
+        await axios.post(`http://localhost:3000/api/orders`)
+        await loadCart();
+
+        navigate('/orders');
+    }
 
     return (
         <>
@@ -67,7 +78,7 @@ export function CheckoutPage({ cart, loadCart }) {
                             }
 
                             const updateCartItem = async () =>{
-                                
+
                                 await loadCart()
                             }
 
@@ -178,7 +189,7 @@ export function CheckoutPage({ cart, loadCart }) {
                                 <div className="payment-summary-money">{formatMoney(paymentSummary.totalCostCents)}</div>
                             </div>
                        
-                            <button className="place-order-button button-primary">
+                            <button className="place-order-button button-primary" onClick={createOrder}>
                                 Place your order
                             </button>
                         </>
